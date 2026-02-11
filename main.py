@@ -176,7 +176,6 @@ def analyze_file_against_targets(source_file, target_files, from_end=False):
             rel_end_tgt   = (offset + window_points) * SAMPLE_LENGTH_SEC / len(fp_target)
 
             if from_end:
-                # Apsolutno vreme od početka
                 s_src = (source_duration + (-SAMPLE_LENGTH_SEC + rel_start_src)) if source_duration else (-SAMPLE_LENGTH_SEC + rel_start_src)
                 e_src = (source_duration + (-SAMPLE_LENGTH_SEC + rel_end_src))   if source_duration else (-SAMPLE_LENGTH_SEC + rel_end_src)
                 s_tgt = (target_duration + (-SAMPLE_LENGTH_SEC + rel_start_tgt)) if target_duration else (-SAMPLE_LENGTH_SEC + rel_start_tgt)
