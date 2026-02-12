@@ -28,7 +28,7 @@ It is resilient to compression differences, small timing offsets, and minor audi
 ## 🛠 Requirements
 
 ### Python
-- Python **3.8+**
+- Python **3.10+**
 - `numpy`
 
 Install dependency:
@@ -211,11 +211,12 @@ Results are structured per target for integration into:
 Edit these parameters at the top of the script:
 
 ```python
-SAMPLE_LENGTH_SEC = 600
+SAMPLE_LENGTH_SEC = 300
 WINDOW_SEC = 6
 STEP_SEC = 1
 MIN_SIMILARITY = 0.82
 MIN_OVERLAP_POINTS = 8
+MAX_WORKERS = 4
 ```
 
 To adjust merging tolerance, modify the merge offset inside `merge_overlapping_intervals`.
