@@ -298,6 +298,7 @@ if __name__ == "__main__":
 
     do_begin = args.begin or not args.end
     do_end   = args.end or not args.begin
+    print("Generating fingerprints..")
     fp_cache = prepare_all_fingerprints(source, targets, do_begin, do_end)
     durations = fetch_duration_parallel(source, targets)
     final_results = []
@@ -305,10 +306,23 @@ if __name__ == "__main__":
     intro_all_matches = None
     credits_all_matches = None
 
-    if do_begin:
+    if do_begin and do_end:
+        with ProcessPoolExecutor(max_workers=2) as executor:
+            future_begin = executor.submit(
+                analyze_file_against_targets,
+                source, targets, fp_cache, durations, from_end=False
+            )
+            future_end   = executor.submit(
+                analyze_file_against_targets,
+                source, targets, fp_cache, durations, from_end=True
+            )
+            intro_all_matches   = future_begin.result()
+            credits_all_matches = future_end.result()
+
+    elif do_begin:
         intro_all_matches = analyze_file_against_targets(source, targets, fp_cache, durations, from_end=False)
 
-    if do_end:
+    elif do_end:
         credits_all_matches = analyze_file_against_targets(source, targets, fp_cache, durations, from_end=True)
 
     for target in targets:
